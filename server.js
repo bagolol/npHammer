@@ -9,7 +9,17 @@ const pjson = require('./package.json');
 // require the project's package.json
 // get all the dependencies
 const packageNames = Object.keys(pjson.dependencies);
-getJSONFiles().then(files => console.log(files))
+
+const isRelevantPackage = filename => {
+    filename = filename.match(/.\/node_modules\/(.*?)\/package.json/)[1];
+    return packageNames.indexOf(filename) > -1;
+}
+
+
+getJSONFiles().then(files => files.filter(isRelevantPackage)).
+    then(filteredFiles => console.log(filteredFiles))
+
+
 
 const app = Express();
 const PORT = 5000;
@@ -40,13 +50,13 @@ const getRepo = myConfig => {
 
 app.get('/', (req, res) => getRepo(config));
 
-const promises = packageNames.map( name => getRepo(config(name)));
+// const promises = packageNames.map( name => getRepo(config(name)));
 
-Promise.all(promises).then(values => {
-    console.log(values);
-}).catch(reason => {
-    console.log(reason)
-});
+// Promise.all(promises).then(values => {
+//     console.log(values);
+// }).catch(reason => {
+//     console.log(reason)
+// });
 
 app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
 
