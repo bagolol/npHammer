@@ -2,7 +2,7 @@ import request from 'request'
 import * as fs from 'fs';
 import getJSONFiles from './readNodeModules'
 const pjson = require('./package.json');
-const ACCESS_TOKEN = '57ed1327b1c176eb1326f3cdad8fc530e633e893';
+const ACCESS_TOKEN = '';
 const MsToDays = 86400000;
 const baseURL = 'https://api.github.com/repos/'
 // require the project's package.json
