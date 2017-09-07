@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import getJSONFiles from './readNodeModules'
 const pjson = require('./package.json');
 const ACCESS_TOKEN = '57ed1327b1c176eb1326f3cdad8fc530e633e893';
+const MsToDays = 86400000;
 const baseURL = 'https://api.github.com/repos/'
 // require the project's package.json
 // get all the dependencies
@@ -51,6 +52,7 @@ const queryGithubApi = myConfig => {
 const analyseRepo = (localVersionSha, currentRepo) => {
     getCommitDate(localVersionSha, currentRepo).then(date => {
         const days = getReleaseAge(currentRepo.pushed_at, date);
+        const lastUpdated = getReleaseAge(new Date(), currentRepo.pushed_at);
         const issuesRatio = (currentRepo.open_issues_count / currentRepo.size) * 100;
         const resultsObj = {
             repository: currentRepo.name,
@@ -59,7 +61,8 @@ const analyseRepo = (localVersionSha, currentRepo) => {
             issues: currentRepo.open_issues_count,
             stars: currentRepo.watchers,
             size: currentRepo.size,
-            issuesRatio: issuesRatio.toFixed(2)
+            issuesRatio: issuesRatio.toFixed(2),
+            lastUpdated: lastUpdated
         };
         console.log(resultsObj);
     })
@@ -79,6 +82,6 @@ const getCommitDate = (commit, repo) => {
 const getReleaseAge = (current, local) => {
     current = Date.parse(current);
     local = Date.parse(local);
-    return ((current - local) / 86400000).toFixed();
+    return ((current - local) / MsToDays ).toFixed();
 }
 
