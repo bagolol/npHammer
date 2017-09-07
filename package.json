@@ -1,8 +1,7 @@
 {
-  "name": "npHammer",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "vivo-client",
+  "version": "1.1.0",
+  "description": "Welcome to the README for CPS Vivo!",
   "scripts": {
     "start": "babel-watch server.js --presets es2015,stage-2"
   },
@@ -12,12 +11,28 @@
       "react"
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BBC/vivo-client.git"
+  },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BBC/vivo-client/issues"
+  },
   "dependencies": {
-    "body-parser": "^1.17.1",
-    "express": "^4.15.2",
-    "redux": "^3.7.2"
+    "async": "~1.5.0",
+    "aws-cloudfront-sign": "^2.1.2",
+    "aws-sdk": "~2.1.15",
+    "body-parser": "~1.8.1",
+    "bunyan": "^1.5.1",
+    "command-line-args": "~0.5.3",
+    "compression": "~1.4.3",
+    "connect-favicons": "0.0.4",
+    "cookie-parser": "~1.3.3",
+    "debug": "~2.0.0",
+    "expect.js": "~0.3.1",
+    "express": "~4.9.0"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
@@ -29,5 +44,23 @@
     "babel-preset-stage-2": "^6.22.0",
     "babel-watch": "^2.0.6"
   },
-  "keywords": []
+  "later": {
+    "http-proxy": "^1.11.2",
+    "ip": "^1.0.1",
+    "jade": "~1.6.0",
+    "mincer": "~1.1.3",
+    "moment": "^2.13.0",
+    "morgan": "~1.3.0",
+    "nock": "~0.48.1",
+    "node-statsd": "^0.1.1",
+    "phantomjs-prebuilt": "2.1.7",
+    "q": "*",
+    "raw-body": "~1.3.0",
+    "redis": "^0.12.1",
+    "socket.io": "1.3.5",
+    "socket.io-cookie-parser": "^1.0.0",
+    "socket.io-redis": "^0.1.4",
+    "sqs-consumer": "2.2.0",
+    "tunnel": "0.0.3"
+  }
 }
