@@ -3,6 +3,7 @@
   "version": "1.1.0",
   "description": "Welcome to the README for CPS Vivo!",
   "scripts": {
+    "blessed": "babel-node view.js",
     "start": "babel-watch server.js --presets es2015,stage-2"
   },
   "babel": {
@@ -45,6 +46,9 @@
     "phantomjs-prebuilt": "2.1.7",
     "q": "*",
     "raw-body": "~1.3.0",
+    "blessed": "^0.1.81",
+    "react": "^0.14.0",
+    "react-blessed": "^0.1.7",
     "redis": "^0.12.1",
     "socket.io": "1.3.5",
     "socket.io-cookie-parser": "^1.0.0",
