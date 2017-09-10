@@ -5,7 +5,7 @@ const pjson = require('./package.json');
 const ACCESS_TOKEN = process.env.GITHUBTOKEN;
 const MsToDays = 86400000;
 const baseURL = 'https://api.github.com/repos/'
-console.log(ACCESS_TOKEN)
+
 // require the project's package.json
 // get all the dependencies
 const packageNames = Object.keys(pjson.dependencies);
@@ -26,9 +26,10 @@ const parseJson = (json) => {
 }
 
 // here we filter all modules to get only the ones in our package.json
-getJSONFiles().then(files => files.filter(isRelevantPackage)).
+const getData = _ => {
+    return getJSONFiles().then(files => files.filter(isRelevantPackage)).
         then(locations => locations.map(location => parseJson(require(location))));
-
+}
 const config = uri => ({
     method: 'GET',
     uri: `${uri}?access_token=${ACCESS_TOKEN}`,
@@ -51,22 +52,24 @@ const queryGithubApi = myConfig => {
 // and the actual release number we've installed
 // this way we can calculate how old our version is
 const analyseRepo = (localVersionSha, currentRepo) => {
-    getCommitDate(localVersionSha, currentRepo).then(date => {
-        const days = getReleaseAge(currentRepo.pushed_at, date);
-        const lastUpdated = getReleaseAge(new Date(), currentRepo.pushed_at);
-        const issuesRatio = (currentRepo.open_issues_count / currentRepo.size) * 100;
-        const resultsObj = {
-            repository: currentRepo.name,
-            releaseAge: days,
-            locVerReleaseDate: date,
-            issues: currentRepo.open_issues_count,
-            stars: currentRepo.watchers,
-            size: currentRepo.size,
-            issuesRatio: issuesRatio.toFixed(2),
-            lastUpdated: lastUpdated
-        };
-        console.log(resultsObj);
-    })
+    return new Promise((resolve, reject) => {
+        getCommitDate(localVersionSha, currentRepo).then(date => {
+            const days = getReleaseAge(currentRepo.pushed_at, date);
+            const lastUpdated = getReleaseAge(new Date(), currentRepo.pushed_at);
+            const issuesRatio = (currentRepo.open_issues_count / currentRepo.size) * 100;
+            const resultsObj = {
+                repository: currentRepo.name,
+                releaseAge: days,
+                locVerReleaseDate: date,
+                issues: currentRepo.open_issues_count,
+                stars: currentRepo.watchers,
+                size: currentRepo.size,
+                issuesRatio: issuesRatio.toFixed(2),
+                lastUpdated: lastUpdated
+            };
+            resolve(resultsObj);
+        });
+    });
 }
 // we make a call to the releases endpoint and filter the
 // relevant version. this is because the release number are
@@ -85,4 +88,6 @@ const getReleaseAge = (current, local) => {
     local = Date.parse(local);
     return ((current - local) / MsToDays ).toFixed();
 }
+
+export default getData;
 

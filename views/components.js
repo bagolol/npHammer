@@ -35,7 +35,7 @@ const Repo = props => {
             width="10%"
             height="10%"
             align="center"
-            style={{bg: props.color, fg: "orange"}}>
+            style={{bg: props.color}}>
             {props.name}
         </box>
     )

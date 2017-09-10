@@ -5,24 +5,20 @@ import { Navbar, Footer, Repo, Button } from './components';
 
 
 const style = {
+    fg: 'black',
     hover: {
-        bg: 'crimson'
-    },
-    fg: 'blue',
-    bg: 'green',
-    focus: {
-        border: {
-            fg: 'blue'
-        }
+        bg: 'red'
     }
 };
 // Rendering a simple centered box
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {repos: []};
+        this.state = {color: 'green', repos: []};
         this.handleClick = this.handleClick.bind(this);
+        this.getData = this.getData.bind(this);
         this.showRepos = this.showRepos.bind(this);
+        this.testPromise = this.testPromise.bind(this);
     }
     getData() {
         this.testPromise().then(data => this.setState({repos: data}));
@@ -31,7 +27,6 @@ class App extends Component {
     handleClick() {
         this.setState({color: 'red'});
     }
-
     showRepos() {
         return this.state.repos.map(repo => {
             let offset = (100 * repo.id).toString();
@@ -43,6 +38,11 @@ class App extends Component {
                 />
         });
     }
+
+    testPromise () {
+        const testData = [{name: "test1", id: 1}, {name: "test2", id:2}];
+        return new Promise(resolve => setTimeout(_ => resolve(testData), 2000));
+    };
 
     render() {
         return (
