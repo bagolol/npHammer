@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import blessed from 'blessed';
 import { render } from 'react-blessed';
 import { Navbar, Footer, Repo, Button } from './components';
+import getData from '../ghParser';
 
 
 const style = {
@@ -10,22 +11,19 @@ const style = {
         bg: 'red'
     }
 };
+
 // Rendering a simple centered box
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {color: 'green', repos: []};
         this.handleClick = this.handleClick.bind(this);
-        this.getData = this.getData.bind(this);
         this.showRepos = this.showRepos.bind(this);
-        this.testPromise = this.testPromise.bind(this);
-    }
-    getData() {
-        this.testPromise().then(data => this.setState({repos: data}));
     }
 
     handleClick() {
-        this.setState({color: 'red'});
+        console.log('CLICKED')
+        getData().then(data => console.log(data));
     }
     showRepos() {
         return this.state.repos.map(repo => {
@@ -39,18 +37,13 @@ class App extends Component {
         });
     }
 
-    testPromise () {
-        const testData = [{name: "test1", id: 1}, {name: "test2", id:2}];
-        return new Promise(resolve => setTimeout(_ => resolve(testData), 2000));
-    };
-
     render() {
         return (
             <element>
                 <Navbar color="blue"/>
                 {this.showRepos()}
                 <Button
-                    handleClick={this.getData}
+                    handleClick={this.handleClick}
                     width="20%"
                     height="10%"
                     style={style}
