@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "description": "Welcome to the README for CPS Vivo!",
   "scripts": {
-    "blessed": "babel-node view.js",
+    "blessed": "babel-node views/app.js",
     "start": "babel-watch server.js --presets es2015,stage-2"
   },
   "babel": {
