@@ -6,7 +6,8 @@ import getData from '../ghParser';
 
 
 const style = {
-    fg: 'black',
+    bg: 'green',
+    fg: 'white',
     hover: {
         bg: 'red'
     }
@@ -16,30 +17,30 @@ const style = {
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {color: 'green', repos: []};
+        this.state = {repos: []};
         this.handleClick = this.handleClick.bind(this);
         this.showRepos = this.showRepos.bind(this);
     }
 
-    handleClick() {
-        console.log('CLICKED')
-        getData().then(data => console.log(data));
-    }
+  handleClick() {
+      console.log('CLICKED')
+      getData().then(data => Promise.all(data).then(repos => this.setState({repos: repos })));
+  }
     showRepos() {
         return this.state.repos.map(repo => {
-            let offset = (100 * repo.id).toString();
+            let offset = repo.releaseAge.toString();
             return <Repo
                     offset={offset}
-                    key={repo.id}
+                    key={repo.locVerReleaseDate}
                     color="green"
-                    name={repo.name}
+                    name={repo.repository}
                 />
         });
     }
 
     render() {
         return (
-            <element>
+            <element style={{bg: "white"}}>
                 <Navbar color="blue"/>
                 {this.showRepos()}
                 <Button

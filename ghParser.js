@@ -25,7 +25,6 @@ const config = uri => ({
     }
 });
 
-
 // here we filter all modules to get only the ones in our package.json
 const getData = () => getJSONFiles()
     .then(files => files.filter(isRelevantPackage))
@@ -61,14 +60,16 @@ const analyseRepo = (localVersionSha, currentRepo) => {
                 lastUpdated: lastUpdated
             };
             resolve(resultsObj);
-        });
+        })
     });
 }
 
 const queryGithubApi = myConfig => {
     return new Promise((resolve, reject) => {
         request(myConfig, (err, res, body) => {
-            if (err) return reject(err);
+            if (err) {
+                return reject(err);
+            }
             resolve(JSON.parse(body))
         })
     })
@@ -79,7 +80,10 @@ const queryGithubApi = myConfig => {
 // not consistent
 const getCommitDate = (commit, repo) => {
     const uri = `${baseURL}${repo.full_name}/git/commits/${commit}`;
-    return new Promise ((resolve, reject) => queryGithubApi(config(uri)).then(data => resolve(data.committer.date)));
+    return new Promise ((resolve, reject) => {
+        queryGithubApi(config(uri)).then(data => resolve(data.committer.date))
+            .catch(err => reject(err))
+    });
 }
 
 // here we calculate how many days have passed
@@ -91,4 +95,5 @@ const getReleaseAge = (current, local) => {
 }
 
 export default getData;
+
 
