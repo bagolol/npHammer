@@ -10,7 +10,10 @@ const Navbar = props => {
             width="100%"
             align="center"
             height="10%"
-            style={{bg: props.color, fg: "white", bold: true }}>
+            style={{...props.style,
+                fg: "white",
+                bold: true
+            }}>
             npHammer
         </box>
     )
@@ -23,19 +26,26 @@ const Footer = props => {
             width="100%"
             height="8%"
             align="center"
-            style={{bg: props.color}}>
+            style={props.style}>
         </box>
     )
 }
 
 const Repo = props => {
+    const hoverColor = `light${props.color}`;
     return(
-        <box top={props.offset}
-            left="center"
-            width="10%"
+        <box
+            top="200"
+            onClick={() => props.handleClick(props)}
+            clickable={ true }
+            left={props.offset}
+            width="13%"
             height="10%"
             align="center"
-            style={{bg: props.color}}>
+            style={{
+                bg: props.color,
+                hover:{bg: hoverColor}
+            }}>
             {props.name}
         </box>
     )
@@ -43,12 +53,14 @@ const Repo = props => {
 
 const Button = props => {
     return(
-        <box top="800"
+        <box
+            top="800"
             onClick={props.handleClick}
             clickable={ true }
             left="center"
             width={props.width}
             mouse={ true }
+            align="center"
             height={props.height}
             style={props.style}>
             {props.text}
