@@ -9,13 +9,14 @@ const Navbar = props => {
             left="center"
             width="100%"
             align="center"
+            bold={true}
+            border={{type: ""}}
             height="10%"
             style={{...props.style,
                 fg: "white",
                 bold: true
-            }}>
-            npHammer
-        </box>
+            }}
+        >npHammer</box>
     )
 }
 
@@ -27,6 +28,19 @@ const Footer = props => {
             height="8%"
             align="center"
             style={props.style}>
+        </box>
+    )
+}
+const Loading = props => {
+    return(
+        <box top="500"
+            left="center"
+            width="20%"
+            height="8%"
+            align="center"
+            border={{type: 'line'}}
+            style={props.style}
+        >loading info from github...
         </box>
     )
 }
@@ -61,10 +75,17 @@ const Button = props => {
             width={props.width}
             mouse={ true }
             align="center"
+            border={{type: ""}}
             height={props.height}
             style={props.style}>
             {props.text}
         </box>
     )
 }
-export { Navbar, Footer, Repo, Button };
+export {
+    Navbar,
+    Footer,
+    Repo,
+    Button,
+    Loading
+};

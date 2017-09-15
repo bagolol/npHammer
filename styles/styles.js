@@ -1,18 +1,31 @@
+const loadingStyle = {
+    bg: '#31BAE7',
+    fg: '#252033',
+    border: {
+        fg: '#f0f0f0'
+    }
+};
+
 const buttonStyle = {
-    bg: 'magenta',
+    bg: '#b01965',
     fg: 'white',
+    border: {
+        bg: '#b01965'
+    },
     hover: {
         bg: 'lightmagenta'
     }
 };
+
 const barStyle = {
-    fg: 'red',
-    bg:'lightblue',
+    bg:'#2a2a2a',
     border: {
-        type: 'line',
-        bg: 'red',
-        fg: 'red'
+        bg: '#b01919'
     }
 }
 
-export { buttonStyle, barStyle };
+export {
+    buttonStyle,
+    barStyle,
+    loadingStyle
+};

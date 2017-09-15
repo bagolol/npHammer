@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 import blessed from 'blessed';
 import { render } from 'react-blessed';
-import { Navbar, Footer, Repo, Button } from './components';
 import getData from '../ghParser';
-import { buttonStyle, barStyle } from '../styles/styles';
+import {
+    Navbar,
+    Footer,
+    Repo,
+    Button,
+    Loading
+} from './components';
+import {
+    buttonStyle,
+    barStyle,
+    loadingStyle
+} from '../styles/styles';
+
+
 // Rendering a simple centered box
 class App extends Component {
     constructor(props) {
@@ -38,13 +50,7 @@ class App extends Component {
     }
     showLoading(){
         if (this.state.loading) {
-            return <loading
-                top="center"
-                left="center"
-                style={barStyle}
-                width="30%"
-                height="10%"
-            />
+            return <Loading style={loadingStyle}/>
         }
     }
 
