@@ -38,7 +38,7 @@ const Loading = props => {
             width="20%"
             height="8%"
             align="center"
-            border={{type: 'line'}}
+            border={{type: ''}}
             style={props.style}
         >loading info from github...
         </box>
@@ -49,16 +49,18 @@ const Repo = props => {
     const hoverColor = `light${props.color}`;
     return(
         <box
-            top="200"
+            top={props.top}
             onClick={() => props.handleClick(props)}
             clickable={ true }
             left={props.offset}
             width="13%"
             height="10%"
             align="center"
+            border={{type: ''}}
             style={{
                 bg: props.color,
-                hover:{bg: hoverColor}
+                hover:{bg: hoverColor},
+                border:{bg: props.color}
             }}>
             {props.name}
         </box>

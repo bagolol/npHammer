@@ -26,7 +26,10 @@
     "aws-cloudfront-sign": "^2.1.2",
     "aws-sdk": "~2.1.15",
     "blessed": "^0.1.81",
-    "body-parser": "~1.8.1"
+    "body-parser": "~1.8.1",
+    "bunyan": "^1.5.1",
+    "command-line-args": "~0.5.3",
+    "compression": "~1.4.3"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",

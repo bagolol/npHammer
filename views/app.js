@@ -35,10 +35,11 @@ class App extends Component {
     showRepoInfo(el, mouse) {
         console.log(el, mouse, 'EEEE')
     }
+
     showRepos() {
         return this.state.repos.map((repo, i) => {
             const color = repo.releaseAge > 365 ? "red" : "green";
-            const offset = i * 150;
+            const offset = i === 0 ? 30 : i * 170;
             return <Repo
                 offset={offset.toString()}
                 key={repo.locVerReleaseDate}
