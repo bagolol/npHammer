@@ -33,21 +33,17 @@ class App extends Component {
         getData().then(data => Promise.all(data).then(repos => this.setState({repos: repos, loading: false })));
     }
 
-    showRepoInfo(el, mouse) {
-        console.log(el, mouse, 'EEEE')
+    showRepoInfo(el) {
+        console.log(el.name)
     }
 
     showRepos() {
         return this.state.repos.map((repo, i) => {
             const color = repo.releaseAge > 365 ? "red" : "green";
-            const offset = i === 0 ? 30 : i * 170;
             return <Repo
-                top="200"
-                offset={offset.toString()}
                 key={repo.locVerReleaseDate}
                 handleClick={this.showRepoInfo}
                 color={color}
-                screen={layout}
                 name={repo.repository}
             />
         });
@@ -62,7 +58,7 @@ class App extends Component {
         return (
             <element style={{bg: "white"}}>
                 <Navbar style={barStyle}/>
-                <Layout style={loadingStyle}>
+                <Layout style={{bg: "white"}}>
                     {this.showRepos()}
                 </Layout>
                 {this.showLoading()}

@@ -84,7 +84,6 @@ const Button = props => {
             width={props.width}
             mouse={ true }
             align="center"
-            border={{type: ""}}
             height={props.height}
             style={props.style}>
             {props.text}
