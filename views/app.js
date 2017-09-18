@@ -21,10 +21,15 @@ import {
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {loading: false, repos: []};
+        this.state = {
+            loading: false,
+            repos: [],
+            currentRepo: {}
+        };
         this.handleClick = this.handleClick.bind(this);
         this.showRepos = this.showRepos.bind(this);
         this.showRepoInfo = this.showRepoInfo.bind(this);
+        this.handleClickOnRepo = this.handleClickOnRepo.bind(this);
         this.showLoading = this.showLoading.bind(this);
     }
 
@@ -33,8 +38,8 @@ class App extends Component {
         getData().then(data => Promise.all(data).then(repos => this.setState({repos: repos, loading: false })));
     }
 
-    showRepoInfo(el) {
-        console.log(el.name)
+    handleClickOnRepo(repo) {
+        this.setState({currentRepo: repo})
     }
 
     showRepos() {
@@ -42,7 +47,7 @@ class App extends Component {
             const color = repo.releaseAge > 365 ? "red" : "green";
             return <Repo
                 key={repo.locVerReleaseDate}
-                handleClick={this.showRepoInfo}
+                handleClick={this.handleClickOnRepo}
                 color={color}
                 name={repo.repository}
             />
@@ -53,6 +58,12 @@ class App extends Component {
             return <Loading style={loadingStyle}/>
         }
     }
+    showRepoInfo() {
+        if(this.state.currentRepo.name) {
+            return <Repo name={this.state.currentRepo.name}/>
+        }
+
+    }
 
     render() {
         return (
@@ -62,6 +73,7 @@ class App extends Component {
                     {this.showRepos()}
                 </Layout>
                 {this.showLoading()}
+                {this.showRepoInfo()}
                 <Button
                     handleClick={this.handleClick}
                     width="20%"
