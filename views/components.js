@@ -2,7 +2,6 @@ import React from 'react';
 import blessed from 'blessed';
 import {render} from 'react-blessed';
 
-// Rendering a simple centered box
 const Navbar = props => {
     return(
         <box top="0"
@@ -10,7 +9,6 @@ const Navbar = props => {
             width="100%"
             align="center"
             bold={true}
-            border={{type: ""}}
             height="10%"
             style={{...props.style,
                 fg: "white",
@@ -38,10 +36,22 @@ const Loading = props => {
             width="20%"
             height="8%"
             align="center"
-            border={{type: ''}}
             style={props.style}
         >loading info from github...
         </box>
+    )
+}
+const Layout = props => {
+    return(
+        <layout
+            align="center"
+            top="200"
+            left="center"
+            style={props.style}
+            width="80%"
+            height="50%">
+            {props.children}
+        </layout>
     )
 }
 
@@ -49,14 +59,11 @@ const Repo = props => {
     const hoverColor = `light${props.color}`;
     return(
         <box
-            top={props.top}
             onClick={() => props.handleClick(props)}
             clickable={ true }
-            left={props.offset}
-            width="13%"
-            height="10%"
+            width="20%"
+            height="30%"
             align="center"
-            border={{type: ''}}
             style={{
                 bg: props.color,
                 hover:{bg: hoverColor},
@@ -84,10 +91,12 @@ const Button = props => {
         </box>
     )
 }
+
 export {
     Navbar,
     Footer,
     Repo,
     Button,
-    Loading
+    Loading,
+    Layout
 };

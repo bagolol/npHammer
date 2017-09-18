@@ -7,7 +7,8 @@ import {
     Footer,
     Repo,
     Button,
-    Loading
+    Loading,
+    Layout
 } from './components';
 import {
     buttonStyle,
@@ -41,10 +42,12 @@ class App extends Component {
             const color = repo.releaseAge > 365 ? "red" : "green";
             const offset = i === 0 ? 30 : i * 170;
             return <Repo
+                top="200"
                 offset={offset.toString()}
                 key={repo.locVerReleaseDate}
                 handleClick={this.showRepoInfo}
                 color={color}
+                screen={layout}
                 name={repo.repository}
             />
         });
@@ -59,7 +62,9 @@ class App extends Component {
         return (
             <element style={{bg: "white"}}>
                 <Navbar style={barStyle}/>
-                {this.showRepos()}
+                <Layout style={loadingStyle}>
+                    {this.showRepos()}
+                </Layout>
                 {this.showLoading()}
                 <Button
                     handleClick={this.handleClick}
