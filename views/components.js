@@ -44,22 +44,71 @@ const Loading = props => {
 const Layout = props => {
     return(
         <layout
+            onClick={props.handleClick}
             align="center"
-            top="200"
+            top={props.position.top}
             left="center"
             style={props.style}
-            width="80%"
-            height="50%">
+            width={props.position.width}
+            height={props.position.height}>
             {props.children}
         </layout>
     )
 }
-
 const Repo = props => {
+    const hoverColor = `light${props.color}`;
+    const position = {
+        top: "400",
+        width: "20%",
+        height: "20%"
+    }
+    return(
+        <Layout
+            handleClick={props.handleClick}
+            clickable={ true }
+            position={position}
+            style={{
+                bg: props.color,
+                hover:{bg: hoverColor},
+            }}>
+            <box
+                width="100%"
+                height="10%"
+                align="center"
+                style={{
+                    bg: props.color,
+                }}>Name: {props.repo.repository}</box>
+            <box
+                width="100%"
+                height="10%"
+                align="center"
+                style={{
+                    bg: props.color,
+                }}>IssuesRatio: {props.repo.issuesRatio}</box>
+            <box
+                width="100%"
+                height="10%"
+                align="center"
+                style={{
+                    bg: props.color,
+                }}>Last updated: {props.repo.lastUpdated}</box>
+            <box
+                width="100%"
+                height="10%"
+                align="center"
+                style={{
+                    bg: props.color,
+                }}>Stars: {props.repo.stars}</box>
+        </Layout>
+    )
+}
+
+
+const Cell = props => {
     const hoverColor = `light${props.color}`;
     return(
         <box
-            onClick={() => props.handleClick(props)}
+            onClick={() => props.handleClick(props.repo)}
             clickable={ true }
             width="20%"
             height="30%"
@@ -69,7 +118,7 @@ const Repo = props => {
                 hover:{bg: hoverColor},
                 border:{bg: props.color}
             }}>
-            {props.name}
+            {props.repo.repository}
         </box>
     )
 }
@@ -97,5 +146,6 @@ export {
     Repo,
     Button,
     Loading,
-    Layout
+    Layout,
+    Cell
 };

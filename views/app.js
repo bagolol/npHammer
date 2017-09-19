@@ -3,6 +3,7 @@ import blessed from 'blessed';
 import { render } from 'react-blessed';
 import getData from '../ghParser';
 import {
+    Cell,
     Navbar,
     Footer,
     Repo,
@@ -23,6 +24,8 @@ class App extends Component {
         super(props);
         this.state = {
             loading: false,
+            showGrid: false,
+            showRepo: false,
             repos: [],
             currentRepo: {}
         };
@@ -33,25 +36,34 @@ class App extends Component {
         this.showLoading = this.showLoading.bind(this);
     }
 
-    handleClick() {
-        this.setState({loading: true});
-        getData().then(data => Promise.all(data).then(repos => this.setState({repos: repos, loading: false })));
-    }
+  handleClick() {
+    this.setState({loading: true});
+    getData().then(data => Promise.all(data)
+      .then(repos => this.setState({repos: repos, loading: false, showGrid: true })));
+  }
 
     handleClickOnRepo(repo) {
-        this.setState({currentRepo: repo})
+      const showGrid = !this.state.showGrid;
+      const showRepoInfo = !this.state.showRepoInfo;
+      this.setState({
+        currentRepo: repo,
+        showGrid: showGrid,
+        showRepoInfo: showRepoInfo
+      })
     }
 
     showRepos() {
+      if(this.state.showGrid) {
         return this.state.repos.map((repo, i) => {
-            const color = repo.releaseAge > 365 ? "red" : "green";
-            return <Repo
+            const color = repo.releaseAge > 500 ? "red" : "green";
+            return <Cell
                 key={repo.locVerReleaseDate}
                 handleClick={this.handleClickOnRepo}
                 color={color}
-                name={repo.repository}
+                repo={repo}
             />
         });
+      }
     }
     showLoading(){
         if (this.state.loading) {
@@ -59,17 +71,25 @@ class App extends Component {
         }
     }
     showRepoInfo() {
-        if(this.state.currentRepo.name) {
-            return <Repo name={this.state.currentRepo.name}/>
+        if(this.state.showRepoInfo) {
+          return <Repo
+                  color="magenta"
+                  repo={this.state.currentRepo}
+                  handleClick={this.handleClickOnRepo}
+            />
         }
-
     }
 
     render() {
+      const position = {
+          top: "200",
+          width: "70%",
+          height: "50%"
+      }
         return (
             <element style={{bg: "white"}}>
                 <Navbar style={barStyle}/>
-                <Layout style={{bg: "white"}}>
+                <Layout position={position} style={{bg: "white"}}>
                     {this.showRepos()}
                 </Layout>
                 {this.showLoading()}
