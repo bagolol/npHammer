@@ -76,7 +76,7 @@ const Line = props => {
     return(
         <box
             width="100%"
-            height="12%"
+            height="15%"
             bold={true}
             align="center"
             style={{
@@ -89,7 +89,7 @@ const Repo = props => {
     const position = {
         top: "350",
         width: "30%",
-        height: "20%"
+        height: "35%"
     }
     return(
         <Layout
