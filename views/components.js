@@ -18,6 +18,23 @@ const Navbar = props => {
     )
 }
 
+const listInfo = props => {
+    let lines = [];
+    for (let prop in props.repo) {
+        lines.push([prop, props.repo[prop]]);
+    }
+    return lines.map(line => {
+        return(
+            <Line
+                color={props.color}
+                key={line[0]}
+                description={line[0]}
+                value={line[1]}
+            />
+        )
+    });
+}
+
 const Footer = props => {
     return(
         <box bottom="0"
@@ -55,11 +72,23 @@ const Layout = props => {
         </layout>
     )
 }
+const Line = props => {
+    return(
+        <box
+            width="100%"
+            height="12%"
+            bold={true}
+            align="center"
+            style={{
+                bg: props.color,
+            }}>{props.description}: {props.value}</box>
+    )
+}
 const Repo = props => {
     const hoverColor = `light${props.color}`;
     const position = {
-        top: "400",
-        width: "20%",
+        top: "350",
+        width: "30%",
         height: "20%"
     }
     return(
@@ -71,34 +100,7 @@ const Repo = props => {
                 bg: props.color,
                 hover:{bg: hoverColor},
             }}>
-            <box
-                width="100%"
-                height="10%"
-                align="center"
-                style={{
-                    bg: props.color,
-                }}>Name: {props.repo.repository}</box>
-            <box
-                width="100%"
-                height="10%"
-                align="center"
-                style={{
-                    bg: props.color,
-                }}>IssuesRatio: {props.repo.issuesRatio}</box>
-            <box
-                width="100%"
-                height="10%"
-                align="center"
-                style={{
-                    bg: props.color,
-                }}>Last updated: {props.repo.lastUpdated}</box>
-            <box
-                width="100%"
-                height="10%"
-                align="center"
-                style={{
-                    bg: props.color,
-                }}>Stars: {props.repo.stars}</box>
+            {listInfo(props)}
         </Layout>
     )
 }

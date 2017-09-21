@@ -24,46 +24,48 @@ class App extends Component {
         super(props);
         this.state = {
             loading: false,
+            showButton: true,
             showGrid: false,
             showRepo: false,
             repos: [],
             currentRepo: {}
         };
         this.handleClick = this.handleClick.bind(this);
+        this.showButton = this.showButton.bind(this);
         this.showRepos = this.showRepos.bind(this);
         this.showRepoInfo = this.showRepoInfo.bind(this);
         this.handleClickOnRepo = this.handleClickOnRepo.bind(this);
         this.showLoading = this.showLoading.bind(this);
     }
 
-  handleClick() {
-    this.setState({loading: true});
-    getData().then(data => Promise.all(data)
-      .then(repos => this.setState({repos: repos, loading: false, showGrid: true })));
-  }
+    handleClick() {
+        this.setState({loading: true});
+        getData().then(data => Promise.all(data)
+            .then(repos => this.setState({repos: repos, loading: false, showGrid: true, showButton: false })));
+    }
 
     handleClickOnRepo(repo) {
-      const showGrid = !this.state.showGrid;
-      const showRepoInfo = !this.state.showRepoInfo;
-      this.setState({
-        currentRepo: repo,
-        showGrid: showGrid,
-        showRepoInfo: showRepoInfo
-      })
+        const showGrid = !this.state.showGrid;
+        const showRepoInfo = !this.state.showRepoInfo;
+        this.setState({
+            currentRepo: repo,
+            showGrid: showGrid,
+            showRepoInfo: showRepoInfo
+        })
     }
 
     showRepos() {
-      if(this.state.showGrid) {
-        return this.state.repos.map((repo, i) => {
-            const color = repo.releaseAge > 500 ? "red" : "green";
-            return <Cell
-                key={repo.locVerReleaseDate}
-                handleClick={this.handleClickOnRepo}
-                color={color}
-                repo={repo}
-            />
-        });
-      }
+        if(this.state.showGrid) {
+            return this.state.repos.map((repo, i) => {
+                const color = repo.releaseAge > 500 ? "red" : "green";
+                return <Cell
+                    key={repo.locVerReleaseDate}
+                    handleClick={this.handleClickOnRepo}
+                    color={color}
+                    repo={repo}
+                />
+            });
+        }
     }
     showLoading(){
         if (this.state.loading) {
@@ -72,20 +74,33 @@ class App extends Component {
     }
     showRepoInfo() {
         if(this.state.showRepoInfo) {
-          return <Repo
-                  color="magenta"
-                  repo={this.state.currentRepo}
-                  handleClick={this.handleClickOnRepo}
+            return <Repo
+                color="magenta"
+                repo={this.state.currentRepo}
+                handleClick={this.handleClickOnRepo}
             />
+        }
+    }
+    showButton(){
+        if(this.state.showButton) {
+            return(
+                <Button
+                    handleClick={this.handleClick}
+                    width="20%"
+                    height="10%"
+                    style={buttonStyle}
+                    text="Get package info"
+                />
+            )
         }
     }
 
     render() {
-      const position = {
-          top: "200",
-          width: "70%",
-          height: "50%"
-      }
+        const position = {
+            top: "200",
+            width: "70%",
+            height: "70%"
+        }
         return (
             <element style={{bg: "white"}}>
                 <Navbar style={barStyle}/>
@@ -94,13 +109,7 @@ class App extends Component {
                 </Layout>
                 {this.showLoading()}
                 {this.showRepoInfo()}
-                <Button
-                    handleClick={this.handleClick}
-                    width="20%"
-                    height="10%"
-                    style={buttonStyle}
-                    text="Get package info"
-                />
+                {this.showButton()}
                 <Footer style={barStyle}/>
             </element>
         );
@@ -116,7 +125,7 @@ const screen = blessed.screen({
 
 // Adding a way to quit the program
 screen.key(['escape', 'q', 'C-c'], function(ch, key) {
-  return process.exit(0);
+    return process.exit(0);
 });
 
 // Rendering the React app using our screen
